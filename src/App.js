@@ -7,7 +7,9 @@ class App extends React.Component {
     super(props);
     this.state = {
       input : "",
-      result: ""
+      result: "",
+      isCtoF: true
+
     };
     // this.handleClick=this.handleClick.bind(this);
   }
@@ -17,32 +19,55 @@ class App extends React.Component {
     this.setState({ input: event.target.value });
   };
 
-  convertFromCtoF= (e)=>{
+  handleSubmit = (e) =>{
+    let isCtoF=this.state.isCtoF;
     e.preventDefault()
-    
-    this.setState({ result: this.state.input * (9 / 5) + 32 })
+    let input = this.state.input;
+    if (!Number(input)){
+      alert("Your age must be a number");
+    }
 
+    
+
+    if(isCtoF) {
+      this.convertFromCtoF()
+    } else {
+      this.convertFromFtoC()
+    }
   }
 
-  convertFromFtoC=(e) => {
-    e.preventDefault()
+  convertFromCtoF= ()=>{
+    this.setState({ result: this.state.input * (9 / 5) + 32 })
+  }
 
-    const value = this.state.input - 32 * 5 / 9
+  convertFromFtoC=() => {
+    const value = (this.state.input - 32) * 5 / 9
     this.setState({result: value })
   }
 
   render() {
+    let button;
+    let isCtoF=this.state.isCtoF;
+
+
+    if (isCtoF) {
+      button = <button onClick={()=>this.setState({isCtoF: !isCtoF})}>Convert from C to F</button>
+    } else {
+      button = <button onClick={()=>this.setState({isCtoF: !isCtoF})}>Convert from F to C</button>
+    }
+ 
+
     return (
-      <form onSubmit={this.handleSubmit} >
+      <form onSubmit={(e)=>this.handleSubmit(e)} >
         <h1>Temperature Converter </h1>
         <p>Enter the temperature:</p>
         <input
           type="text"
           onChange={this.myChangeHandler}
-        />
 
-        <button onClick={this.convertFromCtoF}>Convert from C to F</button>
-        <button onClick={this.convertFromFtoC}>Convert from F to C</button>
+        />
+       {button}
+
         <p>Celsius to Fahrenheit</p> 
         <p>{this.state.result}</p>
       </form>
