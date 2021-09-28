@@ -23,11 +23,11 @@ class App extends React.Component {
     let isCtoF=this.state.isCtoF;
     e.preventDefault()
     let input = this.state.input;
-    if (!Number(input)){
-      alert("Your age must be a number");
-    }
 
-    
+    if (!Number(input)){
+      alert("Your input must be a number");
+      return;
+    }
 
     if(isCtoF) {
       this.convertFromCtoF()
@@ -51,16 +51,16 @@ class App extends React.Component {
 
 
     if (isCtoF) {
-      button = <button onClick={()=>this.setState({isCtoF: !isCtoF})}>Convert from C to F</button>
+      button = <button className="btn-temp" onClick={()=>this.setState({isCtoF: !isCtoF})}>Convert from C to F</button>
     } else {
-      button = <button onClick={()=>this.setState({isCtoF: !isCtoF})}>Convert from F to C</button>
+      button = <button className="btn-temp" onClick={()=>this.setState({isCtoF: !isCtoF})}>Convert from F to C</button>
     }
  
 
     return (
       <form onSubmit={(e)=>this.handleSubmit(e)} >
         <h1>Temperature Converter </h1>
-        <p>Enter the temperature:</p>
+        <div>Enter the temperature:</div>
         <input
           type="text"
           onChange={this.myChangeHandler}
@@ -68,8 +68,8 @@ class App extends React.Component {
         />
        {button}
 
-        <p>Celsius to Fahrenheit</p> 
-        <p>{this.state.result}</p>
+        <div>Celsius to Fahrenheit</div> 
+        <div>{this.state.result}</div>
       </form>
     );
   }
